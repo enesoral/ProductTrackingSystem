@@ -1,0 +1,74 @@
+﻿@model PagedList.IPagedList<ProductTrackingSystem.Models.Product>
+@using PagedList
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Ürünler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/Content/css/home.css" rel="stylesheet" type="text/css" />
+}
+
+<nav class="navbar navbar-light bg-light mt-1">
+    <div class="container">
+        <div class="col-md-8">
+            <form>
+                <div class="row">
+                    <select class="form-control select" id="selectbox" onchange="changed()" data-selected="">
+                        <option value="0" selected="selected">Aktif Ürünler</option>
+                        <option value="1">Pasif Ürünler</option>
+                        <option value="2">Bitişi Yaklaşanlar</option>
+                        <option value="3">İlk Yarıda Alınanlar</option>
+                        <option value="4">Son Yarıda Alınanlar</option>
+                        <option value="5">Genel Kullanım</option>
+                        <option value="6">Araştırmaya Yönelik</option>
+                    </select>
+
+                    <select class="select form-control ml-1" id="selectbox2" data-selected="">
+                        <option value="1" selected="selected">Son 1 Ay</option>
+                        <option value="2">Son 2 Ay</option>
+                        <option value="3">Son 3 Ay</option>
+                        <option value="4">Son 4 Ay</option>
+                        <option value="5">Son 5 Ay</option>
+                        <option value="6">Son 6 Ay</option>
+                    </select>
+                    <button class="btn btn-outline-secondary my-2 my-sm-0 form-control btn-view" type="submit" style="margin-left:1%; width:20%">Listele</button>
+                </div>
+            </form>
+        </div>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Aranan ürün.." required title="" oninvalid="this.setCustomValidity('Bu alan boş bırakılamaz!')" oninput="this.setCustomValidity('')" aria-label="Search">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Ara</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Ürün Adı</th>
+                <th scope="col">Son Kullanma Tarihi</th>
+                <th scope="col">Açıklama</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.name</td>
+                    <td>@product.d_expiration.ToString("dd.MM.yyyy")</td>
+                    <td>@product.explanation</td>
+                    <td><a href="#" class="btn btn-outline-info">Detay</a></td>
+                    <td><a href="#" class="btn btn-outline-success">Düzenle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/index")

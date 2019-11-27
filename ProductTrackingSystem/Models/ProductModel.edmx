@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SoftwareTrackingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="spec_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="purpose" Type="bit" Nullable="false" />
+          <Property Name="d_renovation" Type="datetime" Nullable="false" />
+          <Property Name="d_expiration" Type="datetime" Nullable="false" />
+          <Property Name="license_fee" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="payer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="license_type" Type="nvarchar" MaxLength="10" />
+          <Property Name="seller" Type="nvarchar" MaxLength="30" />
+          <Property Name="owner" Type="nvarchar" MaxLength="30" />
+          <Property Name="req_faculty" Type="nvarchar" MaxLength="255" />
+          <Property Name="req_personnel" Type="nvarchar" MaxLength="50" />
+          <Property Name="users" Type="nvarchar" MaxLength="255" />
+          <Property Name="explanation" Type="nvarchar" MaxLength="255" />
+          <Property Name="active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="SoftwareTrackingModelStoreContainer">
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SoftwareTrackingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="spec_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="purpose" Type="Boolean" Nullable="false" />
+          <Property Name="d_renovation" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="d_expiration" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="license_fee" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="payer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="license_type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="seller" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="owner" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="req_faculty" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="req_personnel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="users" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="explanation" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="SoftwareTrackingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Products" EntityType="Self.Product" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SoftwareTrackingModelStoreContainer" CdmEntityContainer="SoftwareTrackingEntities">
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="SoftwareTrackingModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="spec_name" ColumnName="spec_name" />
+                <ScalarProperty Name="purpose" ColumnName="purpose" />
+                <ScalarProperty Name="d_renovation" ColumnName="d_renovation" />
+                <ScalarProperty Name="d_expiration" ColumnName="d_expiration" />
+                <ScalarProperty Name="license_fee" ColumnName="license_fee" />
+                <ScalarProperty Name="payer" ColumnName="payer" />
+                <ScalarProperty Name="license_type" ColumnName="license_type" />
+                <ScalarProperty Name="seller" ColumnName="seller" />
+                <ScalarProperty Name="owner" ColumnName="owner" />
+                <ScalarProperty Name="req_faculty" ColumnName="req_faculty" />
+                <ScalarProperty Name="req_personnel" ColumnName="req_personnel" />
+                <ScalarProperty Name="users" ColumnName="users" />
+                <ScalarProperty Name="explanation" ColumnName="explanation" />
+                <ScalarProperty Name="active" ColumnName="active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
