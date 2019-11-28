@@ -138,20 +138,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Product.cs">
+    <Compile Include="Models\Entity\Product.cs">
       <DependentUpon>ProductModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProductModel.Context.cs">
+    <Compile Include="Models\Entity\ProductModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProductModel.cs">
+    <Compile Include="Models\Entity\ProductModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProductModel.Designer.cs">
+    <Compile Include="Models\Entity\ProductModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductModel.edmx</DependentUpon>
@@ -170,12 +170,12 @@
     <Content Include="favicon.ico" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\ProductModel.Context.tt">
+    <Content Include="Models\Entity\ProductModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ProductModel.Context.cs</LastGenOutput>
       <DependentUpon>ProductModel.edmx</DependentUpon>
+      <LastGenOutput>ProductModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ProductModel.tt">
+    <Content Include="Models\Entity\ProductModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ProductModel.edmx</DependentUpon>
       <LastGenOutput>ProductModel.cs</LastGenOutput>
@@ -200,15 +200,16 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
-    <EntityDeploy Include="Models\ProductModel.edmx">
+    <EntityDeploy Include="Models\Entity\ProductModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ProductModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ProductModel.edmx.diagram">
+    <Content Include="Models\Entity\ProductModel.edmx.diagram">
       <DependentUpon>ProductModel.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

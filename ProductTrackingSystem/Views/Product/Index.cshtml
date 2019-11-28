@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<ProductTrackingSystem.Models.Product>
+﻿@model PagedList.IPagedList<ProductTrackingSystem.Models.Entity.Product>
 @using PagedList
 @using PagedList.Mvc
 
@@ -47,8 +47,8 @@
         <thead>
             <tr>
                 <th scope="col">Ürün Adı</th>
+                <th scope="col">Yenileme Tarihi</th>
                 <th scope="col">Son Kullanma Tarihi</th>
-                <th scope="col">Açıklama</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -58,9 +58,9 @@
             {
                 <tr>
                     <td>@product.name</td>
-                    <td>@product.d_expiration.ToString("dd.MM.yyyy")</td>
-                    <td>@product.explanation</td>
-                    <td><a href="#" class="btn btn-outline-info">Detay</a></td>
+                    <td>@product.renovation_date.ToString("dd.MM.yyyy")</td>
+                    <td>@product.expiration_date.ToString("dd.MM.yyyy")</td>
+                    <td><a href="#" class="btn btn-outline-info" onclick="Open(@product.id)">Detay</a></td>
                     <td><a href="#" class="btn btn-outline-success">Düzenle</a></td>
                 </tr>
             }
@@ -69,6 +69,39 @@
     @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
 </div>
 
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ürün Detayı</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="Preview">
+                @*PartialView*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/index")
+
+<script type="text/javascript">
+    function Open(currentId) {
+        $.ajax({
+            type: "Get",
+            url: '@Url.Action("Detail", "Product")',
+            data: { id: currentId },
+            success: function (data) {
+                $('#Preview').html(data);
+                $('#myModal').modal('show');
+            }
+        });
+    }
+</script>

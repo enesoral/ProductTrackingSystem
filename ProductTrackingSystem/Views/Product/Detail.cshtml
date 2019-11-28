@@ -1,0 +1,18 @@
+﻿@model ProductTrackingSystem.Models.Entity.Product
+@{
+    Layout = null;
+}
+<ul class="list-group">
+    <li class="list-group-item"><b>Şartname Adı:&nbsp;</b>@Model.specification_name</li>
+    <li class="list-group-item"><b>Lisans Bedeli:&nbsp;</b>@Model.license_fee</li>
+    <li class="list-group-item"><b>Lisans Tipi:&nbsp;</b>@Model.license_type</li>
+    <li class="list-group-item"><b>Kullanım:&nbsp;</b>@(Model.usage_type ? "Genel Kullanım" : "Araştırmaya Yönelik")</li>
+    <li class="list-group-item"><b>Ödeyen:&nbsp;</b>@Model.payer</li>
+    <li class="list-group-item"><b>Kullanan Fakülteler:&nbsp;</b>@Model.users</li>
+    <li class="list-group-item"><b>İsteyen Fakülte:&nbsp;</b>@Model.req_faculty</li>
+    <li class="list-group-item"><b>İsteyen Personel:&nbsp;</b>@Model.req_personnel</li>
+    <li class="list-group-item"><b>Satan Firma:&nbsp;</b>@Model.seller</li>
+    <li class="list-group-item"><b>Sahip Firma:&nbsp;</b>@Model.owner</li>
+    <li class="list-group-item"><b>Açıklama:&nbsp;</b>@Model.explanation</li>
+</ul>
+
