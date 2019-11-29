@@ -2,18 +2,10 @@
     margin-right: 20px;
 }
 
-
 .select {
     background-color: #F8F9FA;
-    width: 30%;
-    height: auto;
     border: 0;
     border-bottom: 1px solid lightgray;
     letter-spacing: 0.09em;
     border-radius: 0;
 }
-
-.btn-view {
-    width: 30%;
-}
-

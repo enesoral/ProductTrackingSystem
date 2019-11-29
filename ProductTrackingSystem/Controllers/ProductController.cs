@@ -12,13 +12,20 @@ namespace ProductTrackingSystem.Controllers
     public class ProductController : Controller
     {
         private ProductTrackingEntities db = new ProductTrackingEntities();
-        public ActionResult Index(int page = 1, int pageSize = 4)
+        public ActionResult Index(string searching, int page = 1, int pageSize = 4)
         {
             if (pageSize > 20)
                 pageSize = 20;
 
-            List<Product> products = db.Products.SqlQuery("SELECT * FROM PRODUCTS WHERE is_active = 1").ToList();
-            PagedList<Product> model = new PagedList<Product>(products, page, pageSize);
+            var products = db.Products.Where(p => p.is_active);
+
+            if (!String.IsNullOrEmpty(searching))
+                if (!searching.Trim().Equals(""))
+                    products = products.Where(x => x.name.Contains(searching.Trim()) || x.specification_name.Contains(searching.Trim()));
+
+
+
+            PagedList<Product> model = new PagedList<Product>(products.ToList(), page, pageSize);
 
             return View(model);
         }
