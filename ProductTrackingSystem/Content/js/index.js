@@ -1,15 +1,13 @@
 ﻿$(document).ready(function () {
-    $("#selectbox2").hide();
+    if (document.getElementById("selectListType").value != 3)
+        $("#selectListMonth").hide();
 });
 
 function changed() {
-    var index = document.getElementById("selectbox").selectedIndex;
+    var index = document.getElementById("selectListType").value;
 
-    if (index == 2)
-        $("#selectbox2").show();
+    if (index == 3)
+        $("#selectListMonth").show();
     else
-        $("#selectbox2").hide();
+        $("#selectListMonth").hide();
 }
-
-
-

@@ -13,24 +13,84 @@
     <div class="container">
         <form>
             <div class="input-group">
-                <select class="form-control my-sm-0 mr-sm-2 select" id="selectbox" onchange="changed()" style="width: auto;" data-selected="">
-                    <option value="0" selected="selected">Aktif Ürünler</option>
-                    <option value="1">Pasif Ürünler</option>
-                    <option value="2">Bitişi Yaklaşanlar</option>
-                    <option value="3">İlk Yarıda Alınanlar</option>
-                    <option value="4">Son Yarıda Alınanlar</option>
-                    <option value="5">Genel Kullanım</option>
-                    <option value="6">Araştırmaya Yönelik</option>
-                </select>
+                @Html.DropDownList("ddlListType",
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem {
+                            Text="Aktif Ürünler",
+                            Value="1",
+                            Selected = true
+                        },
+                        new SelectListItem {
+                            Text="Pasif Ürünler",
+                            Value="2",
+                        },
+                        new SelectListItem {
+                            Text="Bitişi Yaklaşanlar",
+                            Value="3",
+                        },
+                        new SelectListItem {
+                            Text="Kullanımı Bitenler",
+                            Value="4",
+                        },
+                        new SelectListItem {
+                            Text="İlk Yarıda Alınanlar",
+                            Value="5",
+                        },
+                        new SelectListItem {
+                            Text="Son Yarıda Alınanlar",
+                            Value="6",
+                        },
+                        new SelectListItem {
+                            Text="Genel Kullanım",
+                            Value="7",
+                        },
+                        new SelectListItem {
+                            Text="Araştırmaya Yönelik",
+                            Value="8",
+                        },
+                    }, null, new
+                    {
+                        @class = "form-control my-sm-0 mr-sm-2 select",
+                        id = "selectListType",
+                        onchange = "changed();",
+                        style = "width: auto;"
+                    })
 
-                <select class="form-control mr-sm-2 select" id="selectbox2" style="width: 50%;" data-selected="">
-                    <option value="1" selected="selected">Son 1 Ay</option>
-                    <option value="2">Son 2 Ay</option>
-                    <option value="3">Son 3 Ay</option>
-                    <option value="4">Son 4 Ay</option>
-                    <option value="5">Son 5 Ay</option>
-                    <option value="6">Son 6 Ay</option>
-                </select>
+                @Html.DropDownList("ddlMonth",
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem {
+                            Text="Son 1 Ay",
+                            Value="1",
+                            Selected = true
+                        },
+                        new SelectListItem {
+                            Text="Son 2 Ay",
+                            Value="2",
+                        },
+                        new SelectListItem {
+                            Text="Son 3 Ay",
+                            Value="3",
+                        },
+                        new SelectListItem {
+                            Text="Son 4 Ay",
+                            Value="4",
+                        },
+                        new SelectListItem {
+                            Text="Son 5 Ay",
+                            Value="5",
+                        },
+                        new SelectListItem {
+                            Text="Son 6 Ay",
+                            Value="6",
+                        },
+                    }, null, new
+                    {
+                        @class = "form-control mr-sm-2 select",
+                        id = "selectListMonth",
+                        style = "width: 50%;"
+                    })
                 <button class="btn btn-outline-secondary my-sm-0" type="submit" style=" width: 23%;">Listele</button>
             </div>
         </form>
@@ -45,7 +105,8 @@
                     maxlength = 50,
                     oninvalid = "this.setCustomValidity('Bir ürün adı veya şartname adı giriniz!')",
                     oninput = "setCustomValidity('')",
-                    onkeypress="return /[a-zA-Z0-9\\s]/i.test(event.key)"
+                    onkeypress = "return /[a-zA-Z0-9\\s]/i.test(event.key)",
+                    autocomplete = "off"
                 })
                 <button class="btn btn-outline-secondary my-sm-0" type="submit">Ara</button>
             </div>
@@ -60,6 +121,7 @@
                 <th scope="col">Ürün Adı</th>
                 <th scope="col">Yenileme Tarihi</th>
                 <th scope="col">Son Kullanma Tarihi</th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
