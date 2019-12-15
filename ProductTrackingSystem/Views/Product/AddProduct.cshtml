@@ -1,0 +1,418 @@
+﻿@model ProductTrackingSystem.Models.Entity.Product
+
+@{
+    ViewBag.Title = "Ürün Ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
+}
+
+<div class="container mt-3">
+    @using (Html.BeginForm("AddProduct", "Product", FormMethod.Post))
+    {
+        
+
+        <div class="form-horizontal">
+
+            <h4>Ürün Ekle</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Ürün Adı</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtName", "", new
+                            {
+                                @class = "form-control",
+                                @maxlength = 50,
+                                @autocomplete = "off",
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Ürün adı boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
+                            })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Şartname Adı</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtSpecificationName", "", new
+                            {
+                                @class = "form-control",
+                                @maxlength = 50,
+                                @autocomplete = "off",
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Şartname adı boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Alım Tarihi</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtPurchaseDate", "", new
+                            {
+                                @class = "form-control",
+                                @id = "datepicker",
+                                @autocomplete = "off",
+                                @readonly = "readonly",
+                                @maxlength = 0,
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Alım tarihi boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
+                            })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Lisans Süresi</b></label>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.TextBox("txtNumber", "", new
+                                    {
+                                        @class = "form-control",
+                                        @id = "txtNumber",
+                                        @type = "number",
+                                        @autocomplete = "new-number",
+                                        @required = "required",
+                                        @min = 1,
+                                        @max = 10,
+                                        @onkeypress = "return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57",
+                                        @oninvalid = "this.setCustomValidity('Değer [1-10] aralığında değil!')",
+                                        @oninput = "setCustomValidity('')"
+                                    })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("ddlTermType",
+                                        new List<SelectListItem>
+                                        {
+                                            new SelectListItem {
+                                                Text="Yıl",
+                                                Value="1",
+                                                Selected = true
+                                            },
+                                            new SelectListItem {
+                                                Text="Ay",
+                                                Value="2",
+                                            },
+                                        }, null, new
+                                        {
+                                            @class = "form-control",
+                                            @id = "ddlTermType"
+                                        })
+                                </div>
+                                <div class="col-md-4 mt-2">
+                                    @Html.CheckBox("chkLimitless", new { @id = "chkLimitless", @onchange = "changed()" })<label for="chkLimitless">&nbsp;<b>Süresiz</b></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Lisans Bedeli</b></label>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBox("txtLicenseFee", "", new
+                                    {
+                                        @class = "form-control",
+                                        @id = "currency-field",
+                                        @maxlength = 16,
+                                        @autocomplete = "off",
+                                        @required = "required",
+                                        @oninvalid = "this.setCustomValidity('Lisans bedeli boş bırakılamaz!')",
+                                        @oninput = "this.setCustomValidity('')"
+                                    })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("ddlCurrencyType",
+                                        new List<SelectListItem>
+                                        {
+                                            new SelectListItem {
+                                                Text="₺ (TL)",
+                                                Value="1",
+                                                Selected = true
+                                            },
+                                            new SelectListItem {
+                                                Text="$ (USD)",
+                                                Value="2",
+                                            },
+                                        }, null, new
+                                        {
+                                            @class = "form-control"
+                                        })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Lisans Tipi</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtLicenseType", "", new
+                            {
+                                @class = "form-control",
+                                @maxlength = 15,
+                                @autocomplete = "off",
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Lisans tipi boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Kullanım Türü</b></label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("ddlUsageType",
+                                new List<SelectListItem>
+                                {
+                                    new SelectListItem {
+                                        Text="Genel",
+                                        Value="1",
+                                        Selected = true
+                                    },
+                                    new SelectListItem {
+                                        Text="Araştırma",
+                                        Value="2",
+                                    },
+                                }, null, new
+                                {
+                                    @class = "form-control",
+                                    @id = "ddlTermType"
+                                })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Ödeyen</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtPayer", "", new
+                            {
+                                @class = "form-control",
+                                @maxlength = 20,
+                                @autocomplete = "off",
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Ödeyen boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Satan Firma</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtSeller", "", new
+                            {
+                                @class = "form-control",
+                                @maxlength = 50,
+                                @autocomplete = "off",
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Satan firma boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
+                            })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Sahip Firma</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtOwner", "", new { @class = "form-control", @maxlength = 50, @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>İsteyen Fakülteler</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtReqFaculty", "", new { @class = "form-control", @maxlength = 150, @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>İsteyen Personel</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtReqPersonnel", "", new { @class = "form-control", @maxlength = 100, @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Kullanan Fakülteler</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtUsers", "", new { @class = "form-control", @maxlength = 150, @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Ürün Durumu</b></label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("ddlIsActive",
+                                new List<SelectListItem>
+                                {
+                                    new SelectListItem {
+                                        Text="Aktif",
+                                        Value="1",
+                                        Selected = true
+                                    },
+                                    new SelectListItem {
+                                        Text="Pasif",
+                                        Value="2",
+                                    },
+                                }, null, new
+                                {
+                                    @class = "form-control"
+                                })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Açıklama</b></label>
+                        <div class="col-md-11">
+                            @Html.TextArea("txtExplanation", "", new { @class = "form-control", @maxlength = 255, @autocomplete = "off", @style = "height:100px; resize: none;" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-11">
+                    <div class="form-group">
+                        <div class="float-right mr-3">
+                            <input type="submit" value="Ürünü Ekle" class="btn btn-lg btn-outline-success" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Content/js/jquery-ui.min.js"></script>
+<script>
+    $("#datepicker").datepicker({
+        dateFormat: "dd-mm-yy",
+        maxDate: '0',
+        changeYear: true,
+        changeMonth: true,
+        monthNamesShort: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+        dayNamesMin: ["Pa", "Pt", "Sl", "Ça", "Pe", "Cu", "Ct"],
+        numberOfMonths: 1,
+        firstDay: 1
+    }).on('change', function () {
+        $(this).valid();
+    });
+
+    $("#datepicker").datepicker().datepicker("setDate", new Date());
+</script>
+
+<script>
+    $("#currency-field").on({
+        keyup: function () {
+            formatCurrency($(this));
+        },
+        blur: function () {
+            formatCurrency($(this), "blur");
+        }
+    });
+
+    function formatNumber(n) {
+        return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+
+    function formatCurrency(input, blur) {
+        var input_val = input.val();
+
+        if (input_val === "") { return; }
+
+        var original_len = input_val.length;
+        var caret_pos = input.prop("selectionStart");
+
+        if (input_val.indexOf(".") >= 0) {
+            var decimal_pos = input_val.indexOf(".");
+            var left_side = input_val.substring(0, decimal_pos);
+            var right_side = input_val.substring(decimal_pos);
+            left_side = formatNumber(left_side);
+            right_side = formatNumber(right_side);
+            if (blur === "blur") {
+                right_side += "00";
+            }
+            right_side = right_side.substring(0, 2);
+            input_val = left_side + "." + right_side;
+        } else {
+            input_val = formatNumber(input_val);
+            if (blur === "blur") {
+                input_val += ".00";
+            }
+        }
+
+        input.val(input_val);
+
+        var updated_len = input_val.length;
+        caret_pos = updated_len - original_len + caret_pos;
+        input[0].setSelectionRange(caret_pos, caret_pos);
+    }
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        if ($("#chkLimitless").is(':checked')) {
+            $("#txtNumber").prop("disabled", true);
+            $("#ddlTermType").prop("disabled", true);
+        }
+    });
+
+    function changed() {
+        if ($("#chkLimitless").is(':checked')) {
+            $("#txtNumber").prop("disabled", true);
+            $("#ddlTermType").prop("disabled", true);
+        } else {
+            $("#txtNumber").prop("disabled", false);
+            $("#ddlTermType").prop("disabled", false);
+        }
+    }
+</script>

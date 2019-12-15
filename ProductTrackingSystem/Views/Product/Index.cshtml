@@ -6,7 +6,6 @@
 @{
     ViewBag.Title = "Ürünler";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    <link href="~/Content/css/home.css" rel="stylesheet" type="text/css" />
 }
 
 <nav class="navbar navbar-light bg-light mt-1">
@@ -52,9 +51,9 @@
                     }, null, new
                     {
                         @class = "form-control my-sm-0 mr-sm-2 select",
-                        id = "selectListType",
-                        onchange = "changed();",
-                        style = "width: auto;"
+                        @id = "selectListType",
+                        @onchange = "changed();",
+                        @style = "width: auto;"
                     })
 
                 @Html.DropDownList("ddlMonth",
@@ -88,8 +87,8 @@
                     }, null, new
                     {
                         @class = "form-control mr-sm-2 select",
-                        id = "selectListMonth",
-                        style = "width: 50%;"
+                        @id = "selectListMonth",
+                        @style = "width: 50%;"
                     })
                 <button class="btn btn-outline-secondary my-sm-0" type="submit" style=" width: 23%;">Listele</button>
             </div>
@@ -105,7 +104,7 @@
                     maxlength = 50,
                     oninvalid = "this.setCustomValidity('Bir ürün adı veya şartname adı giriniz!')",
                     oninput = "setCustomValidity('')",
-                    onkeypress = "return /[a-zA-Z0-9\\s]/i.test(event.key)",
+                    onkeypress = "return /[a-z0-9]/i.test(event.key)",
                     autocomplete = "off"
                 })
                 <button class="btn btn-outline-secondary my-sm-0" type="submit">Ara</button>
@@ -137,7 +136,7 @@
                 <tr>
                     <td>@product.name</td>
                     <td>@product.renovation_date.ToString("dd.MM.yyyy")</td>
-                    <td>@product.expiration_date.ToString("dd.MM.yyyy")</td>
+                    <td>@(product.expiration_date.ToString("dd.MM.yyyy") != "12.12.9999" ? @product.expiration_date.ToString("dd.MM.yyyy") : "SÜRESİZ")</td>
                     <td><a href="#" class="btn btn-outline-info" onclick="Open(@product.id)">Detay</a></td>
                     <td><a href="#" class="btn btn-outline-success">Düzenle</a></td>
                 </tr>
@@ -166,8 +165,11 @@
     </div>
 </div>
 
+
+@Styles.Render("~/Content/paged")
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/index")
+
 
 <script type="text/javascript">
     function Open(currentId) {

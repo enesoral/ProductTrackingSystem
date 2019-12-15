@@ -4,7 +4,7 @@
 }
 <ul class="list-group">
     <li class="list-group-item"><b>Şartname Adı:&nbsp;</b>@Model.specification_name</li>
-    <li class="list-group-item"><b>Lisans Bedeli:&nbsp;</b>@Model.license_fee</li>
+    <li class="list-group-item"><b>Lisans Bedeli:&nbsp;</b>@Model.license_fee @Model.currency_type</li>
     <li class="list-group-item"><b>Lisans Tipi:&nbsp;</b>@Model.license_type</li>
     <li class="list-group-item"><b>Kullanım:&nbsp;</b>@(Model.usage_type ? "Genel Kullanım" : "Araştırmaya Yönelik")</li>
     <li class="list-group-item"><b>Ödeyen:&nbsp;</b>@Model.payer</li>
