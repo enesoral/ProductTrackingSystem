@@ -21,6 +21,7 @@ namespace ProductTrackingSystem.Models.Entity
         public System.DateTime renovation_date { get; set; }
         public System.DateTime expiration_date { get; set; }
         public string license_fee { get; set; }
+        public string currency_type { get; set; }
         public string license_type { get; set; }
         public string payer { get; set; }
         public string users { get; set; }

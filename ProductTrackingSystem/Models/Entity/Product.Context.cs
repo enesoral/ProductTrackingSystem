@@ -15,10 +15,10 @@ namespace ProductTrackingSystem
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ProductTrackingEntities : DbContext
+    public partial class ProductTrackingEntities1 : DbContext
     {
-        public ProductTrackingEntities()
-            : base("name=ProductTrackingEntities")
+        public ProductTrackingEntities1()
+            : base("name=ProductTrackingEntities1")
         {
         }
     
