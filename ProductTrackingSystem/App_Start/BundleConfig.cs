@@ -22,6 +22,8 @@ namespace ProductTrackingSystem
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/css/bootstrap.css",
                       "~/Content/css/home.css"));
+
+            bundles.Add(new StyleBundle("~/Content/paged").Include("~/Content/css/PagedList.css"));
         }
     }
 }
