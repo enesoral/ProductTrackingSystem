@@ -17,8 +17,12 @@ namespace ProductTrackingSystem.Controllers
     public class ProductController : Controller
     {
         private readonly ProductTrackingEntities1 db = new ProductTrackingEntities1();
-        public ActionResult Index(string searching, int? ddlListType, int ddlMonth = 1, int page = 1)
+        public ActionResult Index(string searching, int? page, int? ddlListType, int? ddlMonth)
         {
+            ViewBag.CurrentListType = ddlListType;
+            ViewBag.CurrentMonth = ddlMonth;
+            ViewBag.CurrentSearching = searching;
+
             List<Product> products;
 
             switch (ddlListType)
@@ -57,7 +61,8 @@ namespace ProductTrackingSystem.Controllers
                 if (!searching.Trim().Equals(""))
                     products = new List<Product>(db.Products.Where(x => x.name.Contains(searching.Trim()) || x.specification_name.Contains(searching.Trim())));
 
-            PagedList<Product> model = new PagedList<Product>(products.ToList(), page, 1);
+            int pageNumber = (page ?? 1);
+            PagedList<Product> model = new PagedList<Product>(products.ToList(), pageNumber, 1);
 
             return View(model);
         }

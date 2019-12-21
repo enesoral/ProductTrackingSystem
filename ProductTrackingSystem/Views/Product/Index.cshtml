@@ -1,4 +1,5 @@
 ﻿@model PagedList.IPagedList<ProductTrackingSystem.Models.Entity.Product>
+@using System.Data.Entity.Core.Objects
 @using System.Web.UI.WebControls
 @using PagedList
 @using PagedList.Mvc
@@ -93,10 +94,11 @@
                 <button class="btn btn-outline-secondary my-sm-0" type="submit" style=" width: 23%;">Listele</button>
             </div>
         </form>
+
         @using (Html.BeginForm("Index", "Product", FormMethod.Get))
         {
             <div class="input-group">
-                @Html.TextBox("searching", null, new
+                @Html.TextBox("searching", ViewBag.CurrentSearching as string, new
                 {
                     @class = "form-control mr-sm-2",
                     required = "required",
@@ -104,7 +106,7 @@
                     maxlength = 50,
                     oninvalid = "this.setCustomValidity('Bir ürün adı veya şartname adı giriniz!')",
                     oninput = "setCustomValidity('')",
-                    onkeypress = "return /[a-z0-9]/i.test(event.key)",
+                    onkeypress = "return /[a-z0-9İıçşğüö]/i.test(event.key)",
                     autocomplete = "off"
                 })
                 <button class="btn btn-outline-secondary my-sm-0" type="submit">Ara</button>
@@ -143,7 +145,8 @@
             }
         </tbody>
     </table>
-    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
+
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, ddlListType = ViewBag.CurrentListType, ddlMonth = ViewBag.CurrentMonth, searching = ViewBag.CurrentSearching }))
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
