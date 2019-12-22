@@ -138,6 +138,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaseObject.cs" />
     <Compile Include="Models\Entity\Product.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -175,6 +176,8 @@
     <Content Include="Content\js\jquery-3.4.1.min.js" />
     <Content Include="Content\js\modernizr-2.8.3.js" />
     <Content Include="Content\css\PagedList.css" />
+    <Content Include="Content\css\toastr.css" />
+    <Content Include="Content\css\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -188,6 +191,8 @@
       <DependentUpon>Product.edmx</DependentUpon>
       <LastGenOutput>Product1.cs</LastGenOutput>
     </Content>
+    <Content Include="Content\js\toastr.js" />
+    <Content Include="Content\js\toastr.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -202,6 +207,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
@@ -215,6 +221,8 @@
     <Content Include="Models\Entity\Product.edmx.diagram">
       <DependentUpon>Product.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\css\toastr.scss" />
+    <Content Include="Content\css\toastr.less" />
     <None Include="packages.config" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />

@@ -302,95 +302,94 @@
                         </div>
 
                         <div class="float-right mr-3">
-                            @Html.ActionLink("Ürünü Sil", "DeleteProduct", "Product", new { id = @Model.id }, new { @class="btn btn-lg btn-outline-danger", @onclick = "return confirm('Silmek istediğinizden emin misiniz?');" })
+                            @Html.ActionLink("Ürünü Sil", "DeleteProduct", "Product", new { id = @Model.id }, new { @class = "btn btn-lg btn-outline-danger", @onclick = "return confirm('Silmek istediğinizden emin misiniz?');" })
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    }
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Content/js/jquery-ui.min.js"></script>
+<script>
+    $(".datepicker").datepicker({
+        dateFormat: "dd-mm-yy",
+        changeYear: true,
+        changeMonth: true,
+        minDate: '-5Y',
+        maxDate: '+10Y',
+        monthNamesShort: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+        dayNamesMin: ["Pa", "Pt", "Sl", "Ça", "Pe", "Cu", "Ct"],
+        numberOfMonths: 1,
+        firstDay: 1
+    }).on('change', function () {
+        $(this).valid();
+    });
+</script>
+
+<script>
+    $("#currency-field").on({
+        keyup: function () {
+            formatCurrency($(this));
+        },
+        blur: function () {
+            formatCurrency($(this), "blur");
         }
-    </div>
+    });
 
+    function formatNumber(n) {
+        return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
-    @Scripts.Render("~/bundles/jquery")
-    <script src="~/Content/js/jquery-ui.min.js"></script>
-    <script>
-        $(".datepicker").datepicker({
-            dateFormat: "dd-mm-yy",
-            changeYear: true,
-            changeMonth: true,
-            minDate: '-5Y',
-            maxDate: '+10Y',
-            monthNamesShort: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
-            dayNamesMin: ["Pa", "Pt", "Sl", "Ça", "Pe", "Cu", "Ct"],
-            numberOfMonths: 1,
-            firstDay: 1
-        }).on('change', function () {
-            $(this).valid();
-        });
-    </script>
+    function formatCurrency(input, blur) {
+        var input_val = input.val();
 
-    <script>
-        $("#currency-field").on({
-            keyup: function () {
-                formatCurrency($(this));
-            },
-            blur: function () {
-                formatCurrency($(this), "blur");
+        if (input_val === "") { return; }
+
+        var original_len = input_val.length;
+        var caret_pos = input.prop("selectionStart");
+
+        if (input_val.indexOf(".") >= 0) {
+            var decimal_pos = input_val.indexOf(".");
+            var left_side = input_val.substring(0, decimal_pos);
+            var right_side = input_val.substring(decimal_pos);
+            left_side = formatNumber(left_side);
+            right_side = formatNumber(right_side);
+            if (blur === "blur") {
+                right_side += "00";
             }
-        });
-
-        function formatNumber(n) {
-            return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-
-        function formatCurrency(input, blur) {
-            var input_val = input.val();
-
-            if (input_val === "") { return; }
-
-            var original_len = input_val.length;
-            var caret_pos = input.prop("selectionStart");
-
-            if (input_val.indexOf(".") >= 0) {
-                var decimal_pos = input_val.indexOf(".");
-                var left_side = input_val.substring(0, decimal_pos);
-                var right_side = input_val.substring(decimal_pos);
-                left_side = formatNumber(left_side);
-                right_side = formatNumber(right_side);
-                if (blur === "blur") {
-                    right_side += "00";
-                }
-                right_side = right_side.substring(0, 2);
-                input_val = left_side + "." + right_side;
-            } else {
-                input_val = formatNumber(input_val);
-                if (blur === "blur") {
-                    input_val += ".00";
-                }
-            }
-
-            input.val(input_val);
-
-            var updated_len = input_val.length;
-            caret_pos = updated_len - original_len + caret_pos;
-            input[0].setSelectionRange(caret_pos, caret_pos);
-        }
-
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            if ($("#chkLimitless").is(':checked')) {
-                $("#txtExpirationDate").prop("disabled", true);
-            }
-        });
-
-        function changed() {
-            if ($("#chkLimitless").is(':checked')) {
-                $("#txtExpirationDate").prop("disabled", true);
-            } else {
-                $("#txtExpirationDate").prop("disabled", false);
+            right_side = right_side.substring(0, 2);
+            input_val = left_side + "." + right_side;
+        } else {
+            input_val = formatNumber(input_val);
+            if (blur === "blur") {
+                input_val += ".00";
             }
         }
-    </script>
+
+        input.val(input_val);
+
+        var updated_len = input_val.length;
+        caret_pos = updated_len - original_len + caret_pos;
+        input[0].setSelectionRange(caret_pos, caret_pos);
+    }
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        if ($("#chkLimitless").is(':checked')) {
+            $("#txtExpirationDate").prop("disabled", true);
+        }
+    });
+
+    function changed() {
+        if ($("#chkLimitless").is(':checked')) {
+            $("#txtExpirationDate").prop("disabled", true);
+        } else {
+            $("#txtExpirationDate").prop("disabled", false);
+        }
+    }
+</script>

@@ -24,6 +24,11 @@ namespace ProductTrackingSystem
                       "~/Content/css/home.css"));
 
             bundles.Add(new StyleBundle("~/Content/paged").Include("~/Content/css/PagedList.css"));
+
+            bundles.Add(new StyleBundle("~/Content/toastr").Include("~/Content/css/toastr.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/toastr").Include(
+                "~/Content/js/toastr.js"));
         }
     }
 }

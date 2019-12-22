@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Validation;
-using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
-using ProductTrackingSystem.Models;
 using PagedList;
 using ProductTrackingSystem.Models.Entity;
 
@@ -95,11 +88,13 @@ namespace ProductTrackingSystem.Controllers
                 Product product = new Product();
                 product = setProductFromForm(product, form, true);
                 db.Products.Add(product);
+                TempData["message"] = "Added";
             }
             else
             {
                 var oldProduct = db.Products.Find(Convert.ToInt32(form["id"]));
                 setProductFromForm(oldProduct, form, false);
+                TempData["message"] = "Edited";
             }
             
             db.SaveChanges();
@@ -114,10 +109,10 @@ namespace ProductTrackingSystem.Controllers
                 return RedirectToAction("Index", "Product");
             }
 
-            Product product = db.Products.Find(id);
+            Product product = db.Products.Find(id); 
             db.Products.Remove(product);
+            TempData["message"] = "Deleted";
             db.SaveChanges();
-
             return RedirectToAction("Index", "Product");
         }
 
