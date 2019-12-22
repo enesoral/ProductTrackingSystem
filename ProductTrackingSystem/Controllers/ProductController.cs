@@ -31,19 +31,19 @@ namespace ProductTrackingSystem.Controllers
                     products = new List<Product>(db.Products.Where(p => !p.is_active));
                     break;
                 case 3:
-                    products = new List<Product>((IEnumerable<Product>) db.Products.SqlQuery(
+                    products = new List<Product>((IEnumerable<Product>)db.Products.SqlQuery(
                         "SELECT * FROM Products WHERE DATEDIFF(day, GETDATE(), expiration_date) <= {0} AND DATEDIFF(day, GETDATE(), expiration_date) >= 0", ddlMonth * 30));
                     break;
                 case 4:
-                    products = new List<Product>((IEnumerable<Product>) db.Products.SqlQuery(
+                    products = new List<Product>((IEnumerable<Product>)db.Products.SqlQuery(
                         "SELECT * FROM Products WHERE DATEDIFF(day, GETDATE(), expiration_date) <= 0"));
                     break;
                 case 5:
-                    products = new List<Product>((IEnumerable<Product>) db.Products.SqlQuery(
+                    products = new List<Product>((IEnumerable<Product>)db.Products.SqlQuery(
                         "SELECT * FROM Products WHERE MONTH(renovation_date) <= 6 AND YEAR(renovation_date) = YEAR(GETDATE())"));
                     break;
                 case 6:
-                    products = new List<Product>((IEnumerable<Product>) db.Products.SqlQuery(
+                    products = new List<Product>((IEnumerable<Product>)db.Products.SqlQuery(
                         "SELECT * FROM Products WHERE MONTH(renovation_date) > 6 AND YEAR(renovation_date) = YEAR(GETDATE())"));
                     break;
                 case 7:
@@ -62,52 +62,91 @@ namespace ProductTrackingSystem.Controllers
                     products = new List<Product>(db.Products.Where(x => x.name.Contains(searching.Trim()) || x.specification_name.Contains(searching.Trim())));
 
             int pageNumber = (page ?? 1);
-            PagedList<Product> model = new PagedList<Product>(products.ToList(), pageNumber, 1);
+            PagedList<Product> model = new PagedList<Product>(products.ToList(), pageNumber, 5);
 
             return View(model);
         }
 
-        public ActionResult Detail(int id)
+        public ActionResult Detail(int? id)
         {
+            id = (id ?? 1);
             var model = db.Products.ToList().FirstOrDefault(x => x.id == id);
             return PartialView("Detail", model);
         }
 
-        [HttpGet]
         public ActionResult AddProduct()
         {
             return View();
         }
 
-        [HttpPost]
-        public ActionResult AddProduct(FormCollection form)
+        public ActionResult EditProduct(int? id)
         {
-            Product product = new Product();
+            id = (id ?? 1);
+            var model = db.Products.ToList().FirstOrDefault(x => x.id == id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult SaveProduct(FormCollection form)
+        {
             
+            if (String.IsNullOrEmpty(form["id"]))
+            {
+                Product product = new Product();
+                product = setProductFromForm(product, form, true);
+                db.Products.Add(product);
+            }
+            else
+            {
+                var oldProduct = db.Products.Find(Convert.ToInt32(form["id"]));
+                setProductFromForm(oldProduct, form, false);
+            }
+            
+            db.SaveChanges();
+            return RedirectToAction("Index", "Product");
+        }
+
+        private DateTime formatToDate(string strDate)
+        {
+            string[] arr = strDate.Split('-');
+            string date = arr[0] + "/" + arr[1] + "/" + arr[2];
+            return DateTime.ParseExact(date, "dd/MM/yyyy", null);
+        }
+
+        private Product setProductFromForm(Product product, FormCollection form, bool isNewProduct)
+        {
             product.name = form["txtName"].Trim();
             product.specification_name = form["txtSpecificationName"].Trim();
             product.renovation_date = formatToDate(form["txtPurchaseDate"]);
-            string expiration_date = product.renovation_date.ToString();
 
-            if (form["chkLimitless"].Equals("false"))
+            if (isNewProduct)
             {
-                if (form["ddlTermType"].Equals("1"))
+                string expiration_date = product.renovation_date.ToString();
+
+                if (form["chkLimitless"].Equals("false"))
                 {
-                    int addDays = Convert.ToInt32(form["txtNumber"]) * 365;
-                    product.expiration_date = Convert.ToDateTime(expiration_date).AddDays(addDays);
+                    if (form["ddlTermType"].Equals("1"))
+                    {
+                        int addDays = Convert.ToInt32(form["txtNumber"]) * 365;
+                        product.expiration_date = Convert.ToDateTime(expiration_date).AddDays(addDays);
+                    }
+                    else
+                    {
+                        int addDays = Convert.ToInt32(form["txtNumber"]) * 30;
+                        product.expiration_date = Convert.ToDateTime(expiration_date).AddDays(addDays);
+                    }
                 }
                 else
                 {
-                    int addDays = Convert.ToInt32(form["txtNumber"]) * 30;
-                    product.expiration_date = Convert.ToDateTime(expiration_date).AddDays(addDays);
+                    product.expiration_date = Convert.ToDateTime("9999-12-12");
                 }
             }
             else
             {
-                product.expiration_date = Convert.ToDateTime("9999-12-12");
+                product.id = Convert.ToInt32(form["id"]);
+                product.expiration_date = form["chkLimitless"].Equals("false") ? formatToDate(form["txtExpirationDate"]) : Convert.ToDateTime("9999-12-12");
             }
 
-            
             product.license_fee = form["txtLicenseFee"].Trim();
             product.currency_type = form["ddlCurrencyType"].Equals("1") ? "₺(TL)" : "$(USD)";
             product.license_type = form["txtLicenseType"].Trim();
@@ -121,17 +160,7 @@ namespace ProductTrackingSystem.Controllers
             product.is_active = form["ddlIsActive"].Equals("1");
             product.explanation = form["txtExplanation"].Trim();
 
-            db.Products.Add(product);
-            db.SaveChanges();
-
-            return RedirectToAction("Index", "Product");
-        }
-
-        private DateTime formatToDate(string strDate)
-        {
-            string[] arr = strDate.Split('-');
-            string date = arr[0] + "/" + arr[1] + "/" + arr[2];
-            return DateTime.ParseExact(date, "dd/MM/yyyy", null);
+            return product;
         }
     }
 }
