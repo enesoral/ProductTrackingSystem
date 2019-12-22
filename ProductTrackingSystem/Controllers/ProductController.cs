@@ -106,6 +106,21 @@ namespace ProductTrackingSystem.Controllers
             return RedirectToAction("Index", "Product");
         }
 
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        public ActionResult DeleteProduct(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Index", "Product");
+            }
+
+            Product product = db.Products.Find(id);
+            db.Products.Remove(product);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Product");
+        }
+
         private DateTime formatToDate(string strDate)
         {
             string[] arr = strDate.Split('-');
