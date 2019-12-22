@@ -139,8 +139,8 @@
                     <td>@product.name</td>
                     <td>@product.renovation_date.ToString("dd.MM.yyyy")</td>
                     <td>@(product.expiration_date.ToString("dd.MM.yyyy") != "12.12.9999" ? @product.expiration_date.ToString("dd.MM.yyyy") : "SÜRESİZ")</td>
-                    <td><a href="#" class="btn btn-outline-info" onclick="Open(@product.id)">Detay</a></td>
-                    <td><a href="#" class="btn btn-outline-success">Düzenle</a></td>
+                    <td><button class="btn btn-outline-info" onclick="OpenDetail(@product.id)">Detay</button></td>
+                    <td><a href="@Url.Action("EditProduct", "Product", new {id = @product.id})" class="btn btn-outline-success">Düzenle</a></td>
                 </tr>
             }
         </tbody>
@@ -168,14 +168,12 @@
     </div>
 </div>
 
-
 @Styles.Render("~/Content/paged")
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/index")
 
-
 <script type="text/javascript">
-    function Open(currentId) {
+    function OpenDetail(currentId) {
         $.ajax({
             type: "GET",
             url: '@Url.Action("Detail", "Product")',
