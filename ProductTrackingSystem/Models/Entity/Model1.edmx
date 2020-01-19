@@ -27,8 +27,17 @@
           <Property Name="explanation" Type="nvarchar" MaxLength="255" />
           <Property Name="is_active" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="ProductTrackingModelStoreContainer">
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -57,15 +66,24 @@
           <Property Name="explanation" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="is_active" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="ProductTrackingEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ProductTrackingEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Users" EntityType="Self.User" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ProductTrackingModelStoreContainer" CdmEntityContainer="ProductTrackingEntities1">
+        <EntityContainerMapping StorageEntityContainer="ProductTrackingModelStoreContainer" CdmEntityContainer="ProductTrackingEntities">
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="ProductTrackingModel.Product">
               <MappingFragment StoreEntitySet="Products">
@@ -86,6 +104,15 @@
                 <ScalarProperty Name="owner" ColumnName="owner" />
                 <ScalarProperty Name="explanation" ColumnName="explanation" />
                 <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ProductTrackingModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -298,10 +298,10 @@
                 <div class="col-md-11">
                     <div class="form-group">
                         <div class="float-right mr-3">
-                            <input type="submit" value="Ürünü Düzenle" class="btn btn-lg btn-outline-warning" onclick="return confirm('Düzenlemek istediğinizden emin misiniz?');" />
+                            <input type="submit" value="Ürünü Düzenle" class="btn btn-lg btn-outline-success" onclick="return confirm('Düzenlemek istediğinizden emin misiniz?');" />
                         </div>
 
-                        <div class="float-right mr-3">
+                        <div class="float-right mr-4">
                             @Html.ActionLink("Ürünü Sil", "DeleteProduct", "Product", new { id = @Model.id }, new { @class = "btn btn-lg btn-outline-danger", @onclick = "return confirm('Silmek istediğinizden emin misiniz?');" })
                         </div>
                     </div>

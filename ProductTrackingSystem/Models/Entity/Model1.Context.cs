@@ -7,18 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using ProductTrackingSystem.Models.Entity;
-
-namespace ProductTrackingSystem
+namespace ProductTrackingSystem.Models.Entity
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ProductTrackingEntities1 : DbContext
+    public partial class ProductTrackingEntities : DbContext
     {
-        public ProductTrackingEntities1()
-            : base("name=ProductTrackingEntities1")
+        public ProductTrackingEntities()
+            : base("name=ProductTrackingEntities")
         {
         }
     
@@ -28,5 +26,6 @@ namespace ProductTrackingSystem
         }
     
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

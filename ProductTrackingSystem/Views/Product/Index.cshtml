@@ -14,11 +14,11 @@
     <script >
         $(document).ready(function () {
             if ('@TempData["message"]' == "Added") {
-                toastr.success('Ürün başarıyla eklendi!');
+                toastr.success('Ürün başarıyla eklendi!', 'Ekleme başarılı!');
             } else if ('@TempData["message"]' == "Edited") {
-                toastr.success('Ürün başarıyla düzenlendi!');
+                toastr.info('Ürün başarıyla düzenlendi!', 'Düzenleme başarılı!');
             } else if ('@TempData["message"]' == "Deleted") {
-                toastr.success('Ürün başarıyla silindi!');
+                toastr.warning('Ürün başarıyla silindi!', 'Silme başarılı!');
             }
         });
     </script>

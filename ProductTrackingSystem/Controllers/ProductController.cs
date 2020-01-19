@@ -9,7 +9,8 @@ namespace ProductTrackingSystem.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly ProductTrackingEntities1 db = new ProductTrackingEntities1();
+        private readonly ProductTrackingEntities db = new ProductTrackingEntities();
+
         public ActionResult Index(string searching, int? page, int? ddlListType, int? ddlMonth)
         {
             ViewBag.CurrentListType = ddlListType;
@@ -76,13 +77,16 @@ namespace ProductTrackingSystem.Controllers
         {
             id = (id ?? 1);
             var model = db.Products.ToList().FirstOrDefault(x => x.id == id);
+            if (model == null)
+            {
+                return RedirectToAction("Index");
+            }
             return View(model);
         }
 
         [HttpPost]
         public ActionResult SaveProduct(FormCollection form)
         {
-            
             if (String.IsNullOrEmpty(form["id"]))
             {
                 Product product = new Product();
