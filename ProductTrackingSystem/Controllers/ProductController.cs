@@ -7,6 +7,7 @@ using ProductTrackingSystem.Models.Entity;
 
 namespace ProductTrackingSystem.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly ProductTrackingEntities db = new ProductTrackingEntities();
@@ -65,6 +66,9 @@ namespace ProductTrackingSystem.Controllers
         {
             id = (id ?? 1);
             var model = db.Products.ToList().FirstOrDefault(x => x.id == id);
+            if (model == null)
+                return RedirectToAction("Index");
+
             return PartialView("Detail", model);
         }
 

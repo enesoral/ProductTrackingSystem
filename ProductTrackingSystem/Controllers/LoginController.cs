@@ -4,20 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace ProductTrackingSystem.Controllers
 {
     public class LoginController : Controller
     {
-        public ActionResult Index(int? errorId)
+        public ActionResult Login()
         {
-            if (errorId < 0)
-            {
-                TempData["message"] = "Fail";
-            }
             return View();
         }
-
 
         [HttpPost]
         public ActionResult Login(FormCollection form)
@@ -31,13 +27,20 @@ namespace ProductTrackingSystem.Controllers
 
             if(IsValid(user))
             {
+                FormsAuthentication.SetAuthCookie(user.email, false);
                 return RedirectToAction("Index", "Product");
             }
             else
             {
-                return RedirectToAction("Index", new { errorId = -1 });
+                TempData["message"] = "Fail";
+                return RedirectToAction("Login", "Login");
             }
-            
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Login");
         }
 
         private bool IsValid(User user)
