@@ -28,11 +28,12 @@ namespace ProductTrackingSystem.Controllers
             if(IsValid(user))
             {
                 FormsAuthentication.SetAuthCookie(user.email, false);
+                TempData["message"] = "LoginSuccess";
                 return RedirectToAction("Index", "Product");
             }
             else
             {
-                TempData["message"] = "Fail";
+                TempData["message"] = "LoginFail";
                 return RedirectToAction("Login", "Login");
             }
         }

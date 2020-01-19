@@ -26,15 +26,16 @@
                         Ürün Takip Sistemi
                     </span>
 
-
-                    <div class="wrap-input100 validate-input" data-validate="Email gerekli">
-                        <input class="input100" type="text" name="email" placeholder="Email">
+                    <div class="wrap-input100 validate-input">
+                        <input class="input100" type="text" name="email" placeholder="Email" maxlength="40" required="required" 
+                               oninvalid="this.setCustomValidity('Email boş bırakılamaz!')"
+                               oninput="this.setCustomValidity('')">
                         <span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>
                     </div>
 
-                    <div class="wrap-input100 rs1 validate-input" data-validate="Şifre gerekli">
-                        <input class="input100" type="password" name="password" placeholder="Şifre">
+                    <div class="wrap-input100 rs1 validate-input">
+                        <input class="input100" type="password" name="password" maxlength="30"placeholder="Şifre" required="required" oninvalid="this.setCustomValidity('Şifre boş bırakılamaz!')" oninput="this.setCustomValidity('')">
                         <span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>
                     </div>
@@ -42,20 +43,18 @@
                     <div class="container-login100-form-btn m-t-20">
                         <input type="submit" class="login100-form-btn" value="Giriş Yap" />
                     </div>
-
                 </div>
             </div>
         </div>
     }
 
     @Scripts.Render("~/bundles/jquery")
-    <script src="/Content/js/login.js"></script>
     @Scripts.Render("~/bundles/toastr")
     @Styles.Render("~/Content/toastr")
     <script>
         $(document).ready(function () {
-            if ('@TempData["message"]' == "Fail") {
-                toastr.error('Yanlış email veya yanlış şifre girdiniz!', 'Giriş Başarısız');
+            if ('@TempData["message"]' == "LoginFail") {
+                toastr.error('Yanlış email veya yanlış şifre girdiniz.', 'Giriş Başarısız');
             }
         });
     </script>

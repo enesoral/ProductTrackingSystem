@@ -14,12 +14,16 @@
     <script >
         $(document).ready(function () {
             if ('@TempData["message"]' == "Added") {
-                toastr.success('Ürün başarıyla eklendi!', 'Ekleme başarılı!');
+                toastr.success('Ürün başarıyla eklendi.', 'Ekleme başarılı!');
             } else if ('@TempData["message"]' == "Edited") {
-                toastr.info('Ürün başarıyla düzenlendi!', 'Düzenleme başarılı!');
+                toastr.info('Ürün başarıyla düzenlendi.', 'Düzenleme başarılı!');
             } else if ('@TempData["message"]' == "Deleted") {
-                toastr.warning('Ürün başarıyla silindi!', 'Silme başarılı!');
-            }
+                toastr.warning('Ürün başarıyla silindi.', 'Silme başarılı!');
+            } else if ('@TempData["message"]' == "LoginSuccess") {
+                toastr.success('Başarıyla giriş yaptınız.', 'Giriş Başarılı!');
+            } 
+
+            @TempData["message"] = "";
         });
     </script>
 }
