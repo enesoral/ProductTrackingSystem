@@ -3,17 +3,14 @@
 @{
     ViewBag.Title = "Ürün Ekle";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    <link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
+    
 }
 
 <div class="container mt-3">
     @using (Html.BeginForm("SaveProduct", "Product", FormMethod.Post))
     {
-        
-
         <div class="form-horizontal">
-
-            <h4>Ürün Ekle</h4>
+        <h4>Ürün Ekle</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -329,7 +326,7 @@
     }
 </div>
 
-
+<link href="~/Content/css/jquery-ui.min.css" rel="stylesheet" />
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Content/js/jquery-ui.min.js"></script>
 <script>

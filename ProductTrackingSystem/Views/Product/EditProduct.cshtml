@@ -9,304 +9,307 @@
 <div class="container mt-3">
     @using (Html.BeginForm("SaveProduct", "Product", FormMethod.Post))
     {
-    <div class="form-horizontal">
+        <div class="form-horizontal">
 
-        <h4>Ürün Düzenle</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <h4>Ürün Düzenle</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Ürün Adı</b></label>
-                    <div class="col-md-10">
-                        @Html.TextBox("txtName", @Model.name, new
-                        {
-                            @class = "form-control",
-                            @maxlength = 50,
-                            @autocomplete = "off",
-                            @required = "required",
-                            @oninvalid = "this.setCustomValidity('Ürün adı boş bırakılamaz!')",
-                            @oninput = "this.setCustomValidity('')"
-                        })
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Şartname Adı</b></label>
-                    <div class="col-md-10">
-                        @Html.TextBox("txtSpecificationName", @Model.specification_name, new
-                        {
-                            @class = "form-control",
-                            @maxlength = 50,
-                            @autocomplete = "off",
-                            @required = "required",
-                            @oninvalid = "this.setCustomValidity('Şartname adı boş bırakılamaz!')",
-                            @oninput = "this.setCustomValidity('')"
-                        })
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Yenileme Tarihi</b></label>
-                    <div class="col-md-10">
-                        @Html.TextBox("txtPurchaseDate", @Model.renovation_date.ToString("dd-MM-yyyy"), new
-                        {
-                            @class = "form-control datepicker",
-                            @autocomplete = "off",
-                            @readonly = "readonly",
-                            @maxlength = 0,
-                            @required = "required",
-                            @oninvalid = "this.setCustomValidity('Yenileme tarihi boş bırakılamaz!')",
-                            @oninput = "this.setCustomValidity('')"
-                        })
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Son Kullanma Tarihi</b></label>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                @Html.TextBox("txtExpirationDate", @Model.expiration_date.ToString("dd-MM-yyyy"), new
-                                {
-                                    @class = "form-control datepicker",
-                                    @autocomplete = "off",
-                                    @readonly = "readonly",
-                                    @maxlength = 0,
-                                    @required = "required",
-                                    @oninvalid = "this.setCustomValidity('Son kullanma tarihi boş bırakılamaz!')",
-                                    @oninput = "this.setCustomValidity('')"
-                                })
-                            </div>
-                            <div class="col-md-4 mt-2">
-                                @Html.CheckBox("chkLimitless", @Model.expiration_date.ToString("dd-MM-yyyy").Equals("12-12-9999"), new { @id = "chkLimitless", @onchange = "changed()" })<label for="chkLimitless">&nbsp;<b>Süresiz</b></label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Lisans Bedeli</b></label>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                @Html.TextBox("txtLicenseFee", @Model.license_fee, new
-                                {
-                                    @class = "form-control",
-                                    @id = "currency-field",
-                                    @maxlength = 16,
-                                    @autocomplete = "off",
-                                    @required = "required",
-                                    @oninvalid = "this.setCustomValidity('Lisans bedeli boş bırakılamaz!')",
-                                    @oninput = "this.setCustomValidity('')"
-                                })
-                            </div>
-                            <div class="col-md-4">
-                                @Html.DropDownList("ddlCurrencyType",
-                                    new List<SelectListItem>
-                                    {
-                                        new SelectListItem {
-                                            Text="₺ (TL)",
-                                            Value="1",
-                                            Selected = @Model.currency_type.ToString().Contains("T")
-                                        },
-                                        new SelectListItem {
-                                            Text="$ (USD)",
-                                            Value="2",
-                                            Selected = @Model.currency_type.ToString().Contains("U")
-                                        },
-                                    }, null, new
-                                    {
-                                        @class = "form-control"
-                                    })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Lisans Tipi</b></label>
-                    <div class="col-md-10">
-                        @Html.TextBox("txtLicenseType", @Model.license_type, new
-                        {
-                            @class = "form-control",
-                            @maxlength = 15,
-                            @autocomplete = "off",
-                            @required = "required",
-                            @oninvalid = "this.setCustomValidity('Lisans tipi boş bırakılamaz!')",
-                            @oninput = "this.setCustomValidity('')"
-                        })
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Kullanım Türü</b></label>
-                    <div class="col-md-10">
-                        @Html.DropDownList("ddlUsageType",
-                            new List<SelectListItem>
-                            {
-                                new SelectListItem {
-                                    Text="Genel",
-                                    Value="1",
-                                    Selected = @Convert.ToInt32(Model.usage_type) == 1
-                                },
-                                new SelectListItem {
-                                    Text="Araştırma",
-                                    Value="2",
-                                    Selected = @Convert.ToInt32(Model.usage_type) == 0
-                                },
-                            }, null, new
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Ürün Adı</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtName", @Model.name, new
                             {
                                 @class = "form-control",
-                                @id = "ddlTermType"
+                                @maxlength = 50,
+                                @autocomplete = "off",
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Ürün adı boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
                             })
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Ödeyen</b></label>
-                    <div class="col-md-10">
-                        @Html.TextBox("txtPayer", @Model.payer, new
-                        {
-                            @class = "form-control",
-                            @maxlength = 20,
-                            @autocomplete = "off",
-                            @required = "required",
-                            @oninvalid = "this.setCustomValidity('Ödeyen boş bırakılamaz!')",
-                            @oninput = "this.setCustomValidity('')"
-                        })
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Satan Firma</b></label>
-                    <div class="col-md-10">
-                        @Html.TextBox("txtSeller", @Model.seller, new
-                        {
-                            @class = "form-control",
-                            @maxlength = 50,
-                            @autocomplete = "off",
-                            @required = "required",
-                            @oninvalid = "this.setCustomValidity('Satan firma boş bırakılamaz!')",
-                            @oninput = "this.setCustomValidity('')"
-                        })
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Sahip Firma</b></label>
-                    <div class="col-md-10">
-                        @Html.TextBox("txtOwner", @Model.owner, new { @class = "form-control", @maxlength = 50, @autocomplete = "off" })
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>İsteyen Fakülteler</b></label>
-                    <div class="col-md-10">
-                        @Html.TextBox("txtReqFaculty", @Model.req_faculty, new { @class = "form-control", @maxlength = 150, @autocomplete = "off" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>İsteyen Personel</b></label>
-                    <div class="col-md-10">
-                        @Html.TextBox("txtReqPersonnel", @Model.req_personnel, new { @class = "form-control", @maxlength = 100, @autocomplete = "off" })
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Kullanan Fakülteler</b></label>
-                    <div class="col-md-10">
-                        @Html.TextBox("txtUsers", @Model.users, new { @class = "form-control", @maxlength = 150, @autocomplete = "off" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Ürün Durumu</b></label>
-                    <div class="col-md-10">
-                        @Html.DropDownList("ddlIsActive",
-                            new List<SelectListItem>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Şartname Adı</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtSpecificationName", @Model.specification_name, new
                             {
-                                new SelectListItem {
-                                    Text="Aktif",
-                                    Value="1",
-                                    Selected = @Convert.ToInt32(Model.is_active) == 1
-                                },
-                                new SelectListItem {
-                                    Text="Pasif",
-                                    Value="2",
-                                    Selected = @Convert.ToInt32(Model.is_active) == 0
-                                },
-                            }, null, new
-                            {
-                                @class = "form-control"
+                                @class = "form-control",
+                                @maxlength = 50,
+                                @autocomplete = "off",
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Şartname adı boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
                             })
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="control-label col-md-12"><b>Açıklama</b></label>
-                    <div class="col-md-11">
-                        @Html.TextArea("txtExplanation", @Model.explanation, new { @class = "form-control", @maxlength = 255, @autocomplete = "off", @style = "height:100px; resize: none;" })
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Yenileme Tarihi</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtPurchaseDate", @Model.renovation_date.ToString("dd-MM-yyyy"), new
+                            {
+                                @class = "form-control datepicker",
+                                @autocomplete = "off",
+                                @readonly = "readonly",
+                                @maxlength = 0,
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Yenileme tarihi boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
+                            })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Son Kullanma Tarihi</b></label>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBox("txtExpirationDate", @Model.expiration_date.ToString("dd-MM-yyyy"), new
+                                    {
+                                        @class = "form-control datepicker",
+                                        @autocomplete = "off",
+                                        @readonly = "readonly",
+                                        @maxlength = 0,
+                                        @required = "required",
+                                        @oninvalid = "this.setCustomValidity('Son kullanma tarihi boş bırakılamaz!')",
+                                        @oninput = "this.setCustomValidity('')"
+                                    })
+                                </div>
+                                <div class="col-md-4 mt-2">
+                                    @Html.CheckBox("chkLimitless", @Model.expiration_date.ToString("dd-MM-yyyy").Equals("12-12-9999"), new { @id = "chkLimitless", @onchange = "changed()" })<label for="chkLimitless">&nbsp;<b>Süresiz</b></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Lisans Bedeli</b></label>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.TextBox("txtLicenseFee", @Model.license_fee, new
+                                    {
+                                        @class = "form-control",
+                                        @id = "currency-field",
+                                        @maxlength = 16,
+                                        @autocomplete = "off",
+                                        @required = "required",
+                                        @oninvalid = "this.setCustomValidity('Lisans bedeli boş bırakılamaz!')",
+                                        @oninput = "this.setCustomValidity('')"
+                                    })
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("ddlCurrencyType",
+                                        new List<SelectListItem>
+                                        {
+                                            new SelectListItem {
+                                                Text="₺ (TL)",
+                                                Value="1",
+                                                Selected = @Model.currency_type.ToString().Contains("T")
+                                            },
+                                            new SelectListItem {
+                                                Text="$ (USD)",
+                                                Value="2",
+                                                Selected = @Model.currency_type.ToString().Contains("U")
+                                            },
+                                        }, null, new
+                                        {
+                                            @class = "form-control"
+                                        })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Lisans Tipi</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtLicenseType", @Model.license_type, new
+                            {
+                                @class = "form-control",
+                                @maxlength = 15,
+                                @autocomplete = "off",
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Lisans tipi boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Kullanım Türü</b></label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("ddlUsageType",
+                                new List<SelectListItem>
+                                {
+                                    new SelectListItem {
+                                        Text="Genel",
+                                        Value="1",
+                                        Selected = @Convert.ToInt32(Model.usage_type) == 1
+                                    },
+                                    new SelectListItem {
+                                        Text="Araştırma",
+                                        Value="2",
+                                        Selected = @Convert.ToInt32(Model.usage_type) == 0
+                                    },
+                                }, null, new
+                                {
+                                    @class = "form-control",
+                                    @id = "ddlTermType"
+                                })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Ödeyen</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtPayer", @Model.payer, new
+                            {
+                                @class = "form-control",
+                                @maxlength = 20,
+                                @autocomplete = "off",
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Ödeyen boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
+                            })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Satan Firma</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtSeller", @Model.seller, new
+                            {
+                                @class = "form-control",
+                                @maxlength = 50,
+                                @autocomplete = "off",
+                                @required = "required",
+                                @oninvalid = "this.setCustomValidity('Satan firma boş bırakılamaz!')",
+                                @oninput = "this.setCustomValidity('')"
+                            })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Sahip Firma</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtOwner", @Model.owner, new { @class = "form-control", @maxlength = 50, @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>İsteyen Fakülteler</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtReqFaculty", @Model.req_faculty, new { @class = "form-control", @maxlength = 150, @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>İsteyen Personel</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtReqPersonnel", @Model.req_personnel, new { @class = "form-control", @maxlength = 100, @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Kullanan Fakülteler</b></label>
+                        <div class="col-md-10">
+                            @Html.TextBox("txtUsers", @Model.users, new { @class = "form-control", @maxlength = 150, @autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Ürün Durumu</b></label>
+                        <div class="col-md-10">
+                            @Html.DropDownList("ddlIsActive",
+                                new List<SelectListItem>
+                                {
+                                    new SelectListItem {
+                                        Text="Aktif",
+                                        Value="1",
+                                        Selected = @Convert.ToInt32(Model.is_active) == 1
+                                    },
+                                    new SelectListItem {
+                                        Text="Pasif",
+                                        Value="2",
+                                        Selected = @Convert.ToInt32(Model.is_active) == 0
+                                    },
+                                }, null, new
+                                {
+                                    @class = "form-control"
+                                })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-12"><b>Açıklama</b></label>
+                        <div class="col-md-11">
+                            @Html.TextArea("txtExplanation", @Model.explanation, new { @class = "form-control", @maxlength = 255, @autocomplete = "off", @style = "height:100px; resize: none;" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @Html.Hidden("id", @Model.id)
+            <div class="row">
+                <div class="col-md-11">
+                    <div class="form-group">
+                        <div class="float-right mr-3">
+                            <input type="submit" value="Ürünü Düzenle" class="btn btn-lg btn-outline-success" onclick="return confirm('Düzenlemek istediğinizden emin misiniz?');" />
+                        </div>
+
+                        <div class="float-right mr-4">
+                            @Html.ActionLink("Ürünü Sil", "DeleteProduct", "Product", new { id = @Model.id }, new { @class = "btn btn-lg btn-outline-danger", @onclick = "return confirm('Silmek istediğinizden emin misiniz?');" })
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        @Html.Hidden("id", @Model.id)
-        <div class="row">
-            <div class="col-md-11">
-                <div class="form-group">
-                    <div class="float-right mr-3">
-                        <input type="submit" value="Ürünü Düzenle" class="btn btn-lg btn-outline-success" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     }
 </div>
-
 
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Content/js/jquery-ui.min.js"></script>

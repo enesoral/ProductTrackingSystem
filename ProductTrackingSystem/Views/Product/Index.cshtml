@@ -9,45 +9,73 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section scripts
+{
+    <script >
+        $(document).ready(function () {
+            if ('@TempData["message"]' == "Added") {
+                toastr.success('Ürün başarıyla eklendi.', 'Ekleme başarılı!');
+            } else if ('@TempData["message"]' == "Edited") {
+                toastr.info('Ürün başarıyla düzenlendi.', 'Düzenleme başarılı!');
+            } else if ('@TempData["message"]' == "Deleted") {
+                toastr.warning('Ürün başarıyla silindi.', 'Silme başarılı!');
+            } else if ('@TempData["message"]' == "LoginSuccess") {
+                toastr.success('Başarıyla giriş yaptınız.', 'Giriş Başarılı!');
+            } 
+
+            @TempData["message"] = "";
+        });
+    </script>
+}
+
 <nav class="navbar navbar-light bg-light mt-1">
+
     <div class="container">
         <form>
             <div class="input-group">
                 @Html.DropDownList("ddlListType",
                     new List<SelectListItem>
                     {
-                        new SelectListItem {
-                            Text="Aktif Ürünler",
-                            Value="1",
+                        new SelectListItem
+                        {
+                            Text = "Aktif Ürünler",
+                            Value = "1",
                             Selected = true
                         },
-                        new SelectListItem {
-                            Text="Pasif Ürünler",
-                            Value="2",
+                        new SelectListItem
+                        {
+                            Text = "Pasif Ürünler",
+                            Value = "2",
                         },
-                        new SelectListItem {
-                            Text="Bitişi Yaklaşanlar",
-                            Value="3",
+                        new SelectListItem
+                        {
+                            Text = "Bitişi Yaklaşanlar",
+                            Value = "3",
                         },
-                        new SelectListItem {
-                            Text="Kullanımı Bitenler",
-                            Value="4",
+                        new SelectListItem
+                        {
+                            Text = "Kullanımı Bitenler",
+                            Value = "4",
                         },
-                        new SelectListItem {
-                            Text="İlk Yarıda Alınanlar",
-                            Value="5",
+                        new SelectListItem
+                        {
+                            Text = "İlk Yarıda Alınanlar",
+                            Value = "5",
                         },
-                        new SelectListItem {
-                            Text="Son Yarıda Alınanlar",
-                            Value="6",
+                        new SelectListItem
+                        {
+                            Text = "Son Yarıda Alınanlar",
+                            Value = "6",
                         },
-                        new SelectListItem {
-                            Text="Genel Kullanım",
-                            Value="7",
+                        new SelectListItem
+                        {
+                            Text = "Genel Kullanım",
+                            Value = "7",
                         },
-                        new SelectListItem {
-                            Text="Araştırmaya Yönelik",
-                            Value="8",
+                        new SelectListItem
+                        {
+                            Text = "Araştırmaya Yönelik",
+                            Value = "8",
                         },
                     }, null, new
                     {
@@ -60,30 +88,36 @@
                 @Html.DropDownList("ddlMonth",
                     new List<SelectListItem>
                     {
-                        new SelectListItem {
-                            Text="Son 1 Ay",
-                            Value="1",
+                        new SelectListItem
+                        {
+                            Text = "Son 1 Ay",
+                            Value = "1",
                             Selected = true
                         },
-                        new SelectListItem {
-                            Text="Son 2 Ay",
-                            Value="2",
+                        new SelectListItem
+                        {
+                            Text = "Son 2 Ay",
+                            Value = "2",
                         },
-                        new SelectListItem {
-                            Text="Son 3 Ay",
-                            Value="3",
+                        new SelectListItem
+                        {
+                            Text = "Son 3 Ay",
+                            Value = "3",
                         },
-                        new SelectListItem {
-                            Text="Son 4 Ay",
-                            Value="4",
+                        new SelectListItem
+                        {
+                            Text = "Son 4 Ay",
+                            Value = "4",
                         },
-                        new SelectListItem {
-                            Text="Son 5 Ay",
-                            Value="5",
+                        new SelectListItem
+                        {
+                            Text = "Son 5 Ay",
+                            Value = "5",
                         },
-                        new SelectListItem {
-                            Text="Son 6 Ay",
-                            Value="6",
+                        new SelectListItem
+                        {
+                            Text = "Son 6 Ay",
+                            Value = "6",
                         },
                     }, null, new
                     {
@@ -91,7 +125,7 @@
                         @id = "selectListMonth",
                         @style = "width: 50%;"
                     })
-                <button class="btn btn-outline-secondary my-sm-0" type="submit" style=" width: 23%;">Listele</button>
+                <button class="btn btn-outline-secondary my-sm-0" type="submit" style="width: 23%;">Listele</button>
             </div>
         </form>
 
@@ -168,9 +202,12 @@
     </div>
 </div>
 
+
 @Styles.Render("~/Content/paged")
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/index")
+@Scripts.Render("~/bundles/toastr")
+@Styles.Render("~/Content/toastr")
 
 <script type="text/javascript">
     function OpenDetail(currentId) {
